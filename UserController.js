@@ -2,16 +2,26 @@ const Users = require('./model');
 
 class UsersController {
     show(req, res) {
-        console.log(req)
+        try {
+            let result = Users.find().exec();
+            res.send(result);
+        } catch (error) {
+            response.status(500).send(error);
+        }
     }
 
-    send(req, res, next) {
-        console.log(req.body);
-        console.log('res', res.body);
-        const user = new Users(req.body);
-        user
-            .save()
-            .catch((error) => {});
+    send(req, res) {
+        
+    }
+
+    save(req, res) {
+        try {
+            let person = new Users(req.body);
+            let result = person.save();
+            res.send(result);
+        } catch (error) {
+            response.status(500).send(error);
+        }
     }
 
 }

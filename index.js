@@ -1,16 +1,23 @@
 const express = require('express');
 const db = require('./data');
 const usersController = require('./UserController');
+const bodyParser = require("body-parser");
 // const router = express.Router();
+require('dotenv').config();
 
 const app = express();
-const port = 8000;
+let port = process.env.PORT || 8000;
+
 
 db.connect();
-// router()
 
-app.post('/send', usersController.send);
-app.get('/', usersController.show);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.route('/send')
+    .post(usersController.send);
+app.route('/')
+    .get(usersController.show);
 
 
 app.listen(port, () => {
